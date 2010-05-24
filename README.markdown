@@ -73,6 +73,6 @@ Quick start
 
 [4]: http://seleniumhq.org/download
 
-Check `example.ss` for more example code.
+Check `example.ss` for more example code and `api-internal.ss` for a full list of Selenium commands.
 
 Enjoy!

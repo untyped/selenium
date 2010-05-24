@@ -1,7 +1,9 @@
 #lang scheme
 
+; List of Selenium commands, their arities and return types.
+; Used in api.ss to define and provide a suite of proper Scheme functions.
 (define api-commands
-  '(;(start 2 void) - this one has to be defined manually
+  '(;(start 2 void) - this one needs to be defined manually
     (stop 0 void)
     (click 1 void)
     (doubleClick 1 void)
