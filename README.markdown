@@ -12,13 +12,11 @@ See LICENCE and COPYING for licence information.
 Introduction
 ------------
 
-Selenium is a suite of functional testing tools for web applications. This package works with two of these tools:
+This package is two things: a [PLT Scheme][3] client for [Selenium RC][2], and a PLT Scheme language format for [Selenium IDE][1]:
 
- * [Selenium IDE][1] is a Firefox plugin that lets you record web page interactions and export them to a programming language of your choice (in our case PLT Scheme);
+ * [Selenium IDE][1] is a Firefox plugin that lets you record web page interactions and export them to program code;
  
- * [Selenium RC][2] is a client/server framework that lets you replay recorded actions in a web browser of your choice.
-
-Using Selenium.plt, you can record and play back web page interactions using code written in [PLT Scheme][3].
+ * [Selenium RC][2] is a client/server framework that lets you replay recorded actions in one of several popular web browsers.
 
 [1]: http://seleniumhq.org/projects/ide
 [2]: http://seleniumhq.org/projects/remote-control
@@ -27,37 +25,54 @@ Using Selenium.plt, you can record and play back web page interactions using cod
 Quick start
 -----------
 
- 1. Go to the [Selenium Downloads][4] page and grab Selenium IDE and Selenium RC.
+ 1. Go to the [Selenium Downloads][4] page and grab Selenium IDE and Selenium RC. Also make sure you have recent versions of Firefox (3.6 tested) and Java (1.6 tested).
 
- 2. Download the code for this package and require `main.ss` from your Scheme code:
+ 2. Download this package and require `main.ss` from your Scheme code:
 
-    #lang scheme
+        #lang scheme
+        
+        (require "path/to/main.ss")
 
-    (require "path/to/main.ss")
-
-    ; This assumes Selenium Server is running on localhost port 4444. See config.ss for more info:
-    (current-selenium-config (create-selenium-config "*firefox" "http://www.google.com"))
+        ; This assumes Selenium Server is running on localhost port 4444. See config.ss for more info:
+        (current-selenium-config (create-selenium-config "*firefox" "http://www.google.com"))
+        
+        ; Fire up a browser
+        (sel-start)
+        
+        ; Web interactions go here...
 
  3. Install the Selenium IDE Firefox plugin and add the PLT Scheme language format:
 
-    a. Open Selenium IDE from Firefox: *Tools menu > Selenium IDE*;
-    b. Select the Selenium window and go to *Options menu > Options...*;
-    c. Go to *Formats > Add* and copy and paste the contents of `selenium-ide.js` from Selenium.plt;
-    d. Name the new format "PLT Scheme" and close the options dialog;
-    e. Set the clipboard format to PLT Scheme: choose *Options menu > Clipboard format > PLT Scheme*.
+    1. Open Selenium IDE from Firefox: *Tools menu > Selenium IDE*;
+    
+    2. Select the Selenium window and go to *Options menu > Options...*;
+    
+    3. Go to *Formats > Add* and copy and paste in the contents of `selenium-ide.js`;
+    
+    4. Name the new format "PLT Scheme" and close the options dialog;
+    
+    5. Set the clipboard format to PLT Scheme: choose *Options menu > Clipboard format > PLT Scheme*.
 
  4. Record some actions: go to Google, do a search, and so on...
  
- 5. Select the actions in Selenium IDE: *Edit menu > Select all*.
- 
- 6. Copy the actions to the clipboard.
- 
- 7. Paste the actions into your Scheme module (they should come out looking as Scheme expressions).
+ 5. Select the recorded actions in Selenium IDE using *Edit menu > Select all*, copy them to your clipboard, and paste them into your Scheme code under the comment *Web interactions go here...*. They should come out looking like Scheme expressions. For example:
 
- 8. On your command line, run Selenium Server:
+        ; Web interactions go here...
+        (sel-open "/")
+        (sel-type "q" "untyped")
+        (sel-click "btnG")
+        (sel-wait-for-page-to-load "30000")
+        (sel-click "link=Home - Untyped")
+        (sel-wait-for-page-to-load "30000")
+
+ 8. Run Selenium RC Server using the `java` command on your OS command line:
  
-    bash$ java -jar selenium-server.jar
+        bash$ java -jar selenium-server.jar
 
  9. Run your Scheme application, which should start a copy of Firefox and play back your recorded actions.
 
 [4]: http://seleniumhq.org/download
+
+Check `example.ss` for more example code.
+
+Enjoy!
