@@ -1,9 +1,9 @@
-Selenium PLT
-============
+Selenium
+========
 
 Developed by Untyped.
 
-Selenium RC client for PLT Scheme.
+Selenium RC client for [Racket][3].
 
 Copyright 2006 to 2010 Untyped.
 
@@ -12,7 +12,7 @@ See LICENCE and COPYING for licence information.
 Introduction
 ------------
 
-This package is two things: a [PLT Scheme][3] client for [Selenium RC][2], and a PLT Scheme language format for [Selenium IDE][1]:
+This package is two things: a [Racket][3] client for [Selenium RC][2], and a Racket language format for [Selenium IDE][1]:
 
  * [Selenium IDE][1] is a Firefox plugin that lets you record web page interactions and export them to program code;
  
@@ -20,16 +20,16 @@ This package is two things: a [PLT Scheme][3] client for [Selenium RC][2], and a
 
 [1]: http://seleniumhq.org/projects/ide
 [2]: http://seleniumhq.org/projects/remote-control
-[3]: http://www.plt-scheme.org
+[3]: http://www.racket-lang.org
 
 Quick start
 -----------
 
  1. Go to the [Selenium Downloads][4] page and grab Selenium IDE and Selenium RC. Also make sure you have recent versions of Firefox (3.6 tested) and Java (1.6 tested).
 
- 2. Download this package and require `main.ss` from your Scheme code:
+ 2. Download this package and require `main.ss` from your Racket code:
 
-        #lang scheme
+        #lang racket
         
         (require "path/to/main.ss")
 
@@ -41,7 +41,7 @@ Quick start
         
         ; Web interactions go here...
 
- 3. Install the Selenium IDE Firefox plugin and add the PLT Scheme language format:
+ 3. Install the Selenium IDE Firefox plugin and add the Racket language format:
 
     1. Open Selenium IDE from Firefox: *Tools menu > Selenium IDE*;
     
@@ -49,13 +49,13 @@ Quick start
     
     3. Go to *Formats > Add* and copy and paste in the contents of `selenium-ide.js`;
     
-    4. Name the new format "PLT Scheme" and close the options dialog;
+    4. Name the new format "Racket" and close the options dialog;
     
-    5. Set the clipboard format to PLT Scheme: choose *Options menu > Clipboard format > PLT Scheme*.
+    5. Set the clipboard format to Racket: choose *Options menu > Clipboard format > Racket*.
 
  4. Record some actions: go to Google, do a search, and so on...
  
- 5. Select the recorded actions in Selenium IDE using *Edit menu > Select all*, copy them to your clipboard, and paste them into your Scheme code under the comment *Web interactions go here...*. They should come out looking like Scheme expressions. For example:
+ 5. Select the recorded actions in Selenium IDE using *Edit menu > Select all*, copy them to your clipboard, and paste them into your Racket code under the comment *Web interactions go here...*. They should come out looking like Racket expressions. For example:
 
         ; Web interactions go here...
         (sel-open "/")
@@ -69,7 +69,7 @@ Quick start
  
         bash$ java -jar selenium-server.jar
 
- 9. Run your Scheme application, which should start a copy of Firefox and play back your recorded actions.
+ 9. Run your Racket application, which should start a copy of Firefox and play back your recorded actions.
 
 [4]: http://seleniumhq.org/download
 
