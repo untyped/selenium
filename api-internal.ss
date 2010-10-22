@@ -87,7 +87,7 @@
     (getSelectedId 1 string)
     (isSomethingSelected 1 boolean)
     (getSelectOptions 1 string-list)
-    (getAttribute 1 boolean)
+    (getAttribute 1 string)
     (isTextPresent 1 boolean)
     (isElementPresent 1 boolean)
     (isVisible 1 boolean)
