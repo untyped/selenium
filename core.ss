@@ -2,7 +2,8 @@
 
 (require net/base64
          net/url
-         "config.ss")
+         "config.ss"
+         (planet untyped/unlib:3/debug))
 
 ; (struct bytes)
 (define-struct raw-result (data) #:transparent)
@@ -43,7 +44,18 @@
                                            null)
                                        (url-query base-url))
                                (url-fragment base-url))]
-         [ans-port   (get-pure-port url)]
+         [ans-port   (get-impure-port url)]
+         ; 'spool' is just a hack: read-line waits for hte port to have contents, ensuring
+         ; that there are bytes on the port before the real reading begins (see 'ans' below).
+         ; Here, we just spool off all the header lines until we reach an empty line.
+         ; Then, the port has byte-ready? and the content of teh response can be read off.
+         [spool      (let loop () 
+                       (let ([line (read-bytes-line ans-port 'return-linefeed)])
+                         ;(printf "~s~n" line)
+                         (unless (or (eof-object? line)
+                                     (bytes=? line #""))
+                           (loop))))]
+         ; here we buffer the content for immediate return (not waiting for TCP port to close)
          [buff       (make-bytes 4096 0)]
          [ans        (let loop ([accum #""])
                        (if (byte-ready? ans-port)
@@ -74,7 +86,7 @@
                    (printf "press ENTER to continue~n")
                    (read-line))
                  (error "[selenium] command failed" data))])
-  
+    
     (if (= (bytes-length data) 2)
         (if (equal? data #"OK") #"" (fail))
         (cond [(equal? (subbytes data 0 3) #"OK,")
